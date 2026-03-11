@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package api.v1.echo;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/yylego/vue3kratos/internal/examples/example2/api/v1/echo;echo";
+
+// Echo service with multiple operations
+// Echo 服务包含多个操作
+service Echo {
+  // Basic echo - returns the same message
+  // 基础回显 - 返回相同的消息
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/echo"
+      body: "*"
+    };
+  }
+
+  // Double echo - repeats the message twice
+  // 双倍回显 - 重复消息两次
+  rpc DoubleEcho(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/echo/double"
+      body: "*"
+    };
+  }
+
+  // Reverse echo - returns reversed message
+  // 反转回显 - 返回反转的消息
+  rpc ReverseEcho(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/echo/reverse"
+      body: "*"
+    };
+  }
+}
+
+// Echo request message
+// Echo 请求消息
+message EchoRequest {
+  string message = 1;
+}
+
+// Echo response message
+// Echo 响应消息
+message EchoResponse {
+  string message = 1;
+}
