@@ -61,14 +61,14 @@ func GenGrpcViaHttpInCode(srcContent string) string {
 
 	// Replace gRPC invocations with HTTP equivalents
 	// 把代码中调用 grpc 的地方改成调用 http
-	newContent = strings.ReplaceAll(newContent, "stackIntercept<", "executeGrtp<")
-	newContent = strings.ReplaceAll(newContent, "UnaryCall<", "GrtpPromise<")
+	newContent = strings.ReplaceAll(newContent, "stackIntercept<", "executeGrpcToHttp<")
+	newContent = strings.ReplaceAll(newContent, "UnaryCall<", "GrpcToHttpPromise<")
 
 	// Check if target imports exist
 	// 判断是否存在目标引用
-	targetImport := `import { executeGrtp } from '@yylego/grpt/src/grpcviahttp';` +
+	targetImport := `import { executeGrpcToHttp } from '@yylego/grpc-to-http';` +
 		"\n" +
-		`import type { GrtpPromise } from '@yylego/grpt/src/grpcviahttp';`
+		`import type { GrpcToHttpPromise } from '@yylego/grpc-to-http';`
 	searchImport := `import type { RpcOptions } from "@protobuf-ts/runtime-rpc";`
 
 	if !strings.Contains(newContent, targetImport) {

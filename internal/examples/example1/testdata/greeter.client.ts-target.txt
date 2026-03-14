@@ -9,8 +9,8 @@ import type { HelloReply } from "./greeter";
 import type { HelloRequest } from "./greeter";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
-import { executeGrtp } from '@yylego/grpt/src/grpcviahttp';
-import type { GrtpPromise } from '@yylego/grpt/src/grpcviahttp';
+import { executeGrpcToHttp } from '@yylego/grpc-to-http';
+import type { GrpcToHttpPromise } from '@yylego/grpc-to-http';
 /**
  * The greeting service definition
  * 问候服务定义
@@ -24,7 +24,7 @@ export interface IGreeterClient {
      *
      * @generated from protobuf rpc: SayHello
      */
-    sayHello(input: HelloRequest, options?: RpcOptions): GrtpPromise<HelloRequest, HelloReply>;
+    sayHello(input: HelloRequest, options?: RpcOptions): GrpcToHttpPromise<HelloRequest, HelloReply>;
 }
 /**
  * The greeting service definition
@@ -44,8 +44,8 @@ export class GreeterClient implements IGreeterClient, ServiceInfo {
      *
      * @generated from protobuf rpc: SayHello
      */
-    sayHello(input: HelloRequest, options?: RpcOptions): GrtpPromise<HelloRequest, HelloReply> {
+    sayHello(input: HelloRequest, options?: RpcOptions): GrpcToHttpPromise<HelloRequest, HelloReply> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return executeGrtp<HelloRequest, HelloReply>("unary", this._transport, method, opt, input);
+        return executeGrpcToHttp<HelloRequest, HelloReply>("unary", this._transport, method, opt, input);
     }
 }

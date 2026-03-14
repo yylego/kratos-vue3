@@ -13,6 +13,12 @@
 > Complete type-safe code from backend to frontend
 > Invoke backend APIs just as native functions
 
+---
+
+![grpc-to-http-overview](https://raw.githubusercontent.com/yylego/grpc-to-http/main/assets/grpc-to-http-overview.svg)
+
+---
+
 <!-- TEMPLATE (EN) BEGIN: LANGUAGE NAVIGATION -->
 ## CHINESE README
 
@@ -31,28 +37,6 @@
 +-------------+    +----------+    +---------------+    +--------------+    +---------------+
 ```
 
-### Runtime Architecture
-```
-+------------------+                                    +------------------+
-|   Vue 3 Frontend |                                    |  Kratos Backend  |
-|                  |                                    |                  |
-| ┌──────────────┐ |                                    | ┌──────────────┐ |
-| │ gRPC客户端代码│ |  Code writes gRPC-style calls      │ │   HTTP Service│ |
-| │ client.call() │ |                                    | │  :28000       │ |
-| └──────┬───────┘ |                                    | └──────────────┘ |
-|        │         |                                    |                  |
-| ┌──────▼───────┐ |   Runtime sends HTTP requests      |                  |
-| │HTTP Convert   │ |  =========================>        |                  |
-| │(@yylego/grpt) │ |     POST /api/method               |                  |
-| └──────────────┘ |     Content-Type: application/json |                  |
-|                  |                                    | ┌──────────────┐ |
-|                  |                                    | │   gRPC Service│ |
-|                  |                    ❌ Not use ---> | │   :28001      │ |
-|                  |                                    | │  (Not used)   │ |
-|                  |                                    | └──────────────┘ |
-+------------------+                                    +------------------+
-```
-
 ## 🌟 Highlights
 
 *   **Auto Code Generation**: Generate clean TypeScript clients from proto files
@@ -65,6 +49,11 @@
 *   **CI/CD Pipeline**: Smooth workflow automation support
 *   **Axios HTTP Clients**: Modern HTTP client implementation
 *   **Native Function Experience**: Invoke APIs just as native functions
+
+## Related Projects
+
+- [grpc-to-http](https://github.com/yylego/grpc-to-http) — npm package [`@yylego/grpc-to-http`](https://www.npmjs.com/package/@yylego/grpc-to-http), converts protobuf-ts gRPC invocations to HTTP/REST requests via Axios
+- [kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos) — Complete demo projects with backend and frontend integration
 
 ## 🚀 Quick Start
 
@@ -144,13 +133,13 @@ This command modifies the target file and transforms gRPC invocations into Axios
 
 ### Step 4: Use in Vue
 
-In the Vue project, setup the `@yylego/grpt` runtime module. Then you can invoke APIs just as native functions.
+In the Vue project, setup the `@yylego/grpc-to-http` runtime module. Then you can invoke APIs just as native functions.
 
 ```bash
-npm install @yylego/grpt
+npm install @yylego/grpc-to-http
 ```
 
-> npm module URL: [@yylego/grpt](https://www.npmjs.com/package/@yylego/grpt)
+> npm module URL: [@yylego/grpc-to-http](https://www.npmjs.com/package/@yylego/grpc-to-http)
 
 ```typescript
 // Demo example from kratos-vue3-demos repo
@@ -218,9 +207,9 @@ These examples show proto-based test data generation.
 
 ---
 
-## OLD-Documentation
+## Setup Guide
 
-[README OLD DOC](internal/docs/README_OLD_DOC.en.md)
+[SETUP GUIDE](internal/docs/SETUP_GUIDE.en.md)
 
 ---
 

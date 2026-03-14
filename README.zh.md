@@ -13,6 +13,12 @@
 > 从后端到前端的完整类型安全代码
 > 像调用原生函数一样调用后端 API
 
+---
+
+![grpc-to-http-overview](https://raw.githubusercontent.com/yylego/grpc-to-http/main/assets/grpc-to-http-overview.svg)
+
+---
+
 <!-- TEMPLATE (ZH) BEGIN: LANGUAGE NAVIGATION -->
 ## 英文文档
 
@@ -31,28 +37,6 @@
 +-------------+    +----------+    +---------------+    +--------------+    +---------------+
 ```
 
-### 运行时架构
-```
-+------------------+                                    +------------------+
-|   Vue 3 前端     |                                    |  Kratos 后端     |
-|                  |                                    |                  |
-| ┌──────────────┐ |                                    | ┌──────────────┐ |
-| │ gRPC客户端代码│ |  代码编写 gRPC 风格调用             │ │   HTTP 服务   │ |
-| │ client.call() │ |                                    | │  :28000       │ |
-| └──────┬───────┘ |                                    | └──────────────┘ |
-|        │         |                                    |                  |
-| ┌──────▼───────┐ |   底层实际发送 HTTP 请求            |                  |
-| │HTTP 转换层    │ |  =========================>        |                  |
-| │(@yylego/grpt) │ |     POST /api/method               |                  |
-| └──────────────┘ |     Content-Type: application/json |                  |
-|                  |                                    | ┌──────────────┐ |
-|                  |                                    | │   gRPC 服务   │ |
-|                  |                    ❌ 跳过 ------> | │   :28001      │ |
-|                  |                                    | │  (未使用)     │ |
-|                  |                                    | └──────────────┘ |
-+------------------+                                    +------------------+
-```
-
 ## 🌟 核心特性
 
 *   **自动代码生成**: 从 proto 文件生成简洁的 TypeScript 客户端
@@ -65,6 +49,11 @@
 *   **CI/CD 管线**: 平滑的工作流自动化支持
 *   **Axios HTTP 客户端**: 现代化的 HTTP 客户端实现
 *   **原生函数体验**: 像调用原生函数一样调用 API
+
+## 关联项目
+
+- [grpc-to-http](https://github.com/yylego/grpc-to-http) — npm 包 [`@yylego/grpc-to-http`](https://www.npmjs.com/package/@yylego/grpc-to-http)，将 protobuf-ts gRPC 调用转换为基于 Axios 的 HTTP/REST 请求
+- [kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos) — 完整的演示项目，包含后端和前端集成
 
 ## 🚀 快速上手
 
@@ -144,13 +133,13 @@ vue3kratos gen-grpc-via-http-in-path --grpc-ts-path=/path/to/the/generated.clien
 
 ### 第4步: 在 Vue 中使用
 
-在 Vue 项目中，配置 `@yylego/grpt` 运行时模块，然后就可以像调用原生函数一样，调用所有 API。
+在 Vue 项目中，配置 `@yylego/grpc-to-http` 运行时模块，然后就可以像调用原生函数一样，调用所有 API。
 
 ```bash
-npm install @yylego/grpt
+npm install @yylego/grpc-to-http
 ```
 
-> npm 模块地址：[@yylego/grpt](https://www.npmjs.com/package/@yylego/grpt)
+> npm 模块地址：[@yylego/grpc-to-http](https://www.npmjs.com/package/@yylego/grpc-to-http)
 
 ```typescript
 // 来自 kratos-vue3-demos 演示代码
@@ -218,9 +207,9 @@ async function demoPing() {
 
 ---
 
-## 旧版本文档
+## 配置指南
 
-[旧版说明](internal/docs/README_OLD_DOC.zh.md)
+[配置指南](internal/docs/SETUP_GUIDE.zh.md)
 
 ---
 

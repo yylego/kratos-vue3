@@ -9,8 +9,8 @@ import type { EchoResponse } from "./echo";
 import type { EchoRequest } from "./echo";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
-import { executeGrtp } from '@yylego/grpt/src/grpcviahttp';
-import type { GrtpPromise } from '@yylego/grpt/src/grpcviahttp';
+import { executeGrpcToHttp } from '@yylego/grpc-to-http';
+import type { GrpcToHttpPromise } from '@yylego/grpc-to-http';
 /**
  * Echo service with multiple operations
  * Echo 服务包含多个操作
@@ -24,21 +24,21 @@ export interface IEchoClient {
      *
      * @generated from protobuf rpc: Echo
      */
-    echo(input: EchoRequest, options?: RpcOptions): GrtpPromise<EchoRequest, EchoResponse>;
+    echo(input: EchoRequest, options?: RpcOptions): GrpcToHttpPromise<EchoRequest, EchoResponse>;
     /**
      * Double echo - repeats the message twice
      * 双倍回显 - 重复消息两次
      *
      * @generated from protobuf rpc: DoubleEcho
      */
-    doubleEcho(input: EchoRequest, options?: RpcOptions): GrtpPromise<EchoRequest, EchoResponse>;
+    doubleEcho(input: EchoRequest, options?: RpcOptions): GrpcToHttpPromise<EchoRequest, EchoResponse>;
     /**
      * Reverse echo - returns reversed message
      * 反转回显 - 返回反转的消息
      *
      * @generated from protobuf rpc: ReverseEcho
      */
-    reverseEcho(input: EchoRequest, options?: RpcOptions): GrtpPromise<EchoRequest, EchoResponse>;
+    reverseEcho(input: EchoRequest, options?: RpcOptions): GrpcToHttpPromise<EchoRequest, EchoResponse>;
 }
 /**
  * Echo service with multiple operations
@@ -58,9 +58,9 @@ export class EchoClient implements IEchoClient, ServiceInfo {
      *
      * @generated from protobuf rpc: Echo
      */
-    echo(input: EchoRequest, options?: RpcOptions): GrtpPromise<EchoRequest, EchoResponse> {
+    echo(input: EchoRequest, options?: RpcOptions): GrpcToHttpPromise<EchoRequest, EchoResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return executeGrtp<EchoRequest, EchoResponse>("unary", this._transport, method, opt, input);
+        return executeGrpcToHttp<EchoRequest, EchoResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * Double echo - repeats the message twice
@@ -68,9 +68,9 @@ export class EchoClient implements IEchoClient, ServiceInfo {
      *
      * @generated from protobuf rpc: DoubleEcho
      */
-    doubleEcho(input: EchoRequest, options?: RpcOptions): GrtpPromise<EchoRequest, EchoResponse> {
+    doubleEcho(input: EchoRequest, options?: RpcOptions): GrpcToHttpPromise<EchoRequest, EchoResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return executeGrtp<EchoRequest, EchoResponse>("unary", this._transport, method, opt, input);
+        return executeGrpcToHttp<EchoRequest, EchoResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * Reverse echo - returns reversed message
@@ -78,8 +78,8 @@ export class EchoClient implements IEchoClient, ServiceInfo {
      *
      * @generated from protobuf rpc: ReverseEcho
      */
-    reverseEcho(input: EchoRequest, options?: RpcOptions): GrtpPromise<EchoRequest, EchoResponse> {
+    reverseEcho(input: EchoRequest, options?: RpcOptions): GrpcToHttpPromise<EchoRequest, EchoResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return executeGrtp<EchoRequest, EchoResponse>("unary", this._transport, method, opt, input);
+        return executeGrpcToHttp<EchoRequest, EchoResponse>("unary", this._transport, method, opt, input);
     }
 }
