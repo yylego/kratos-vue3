@@ -20,9 +20,11 @@
 ---
 
 <!-- TEMPLATE (ZH) BEGIN: LANGUAGE NAVIGATION -->
+
 ## 英文文档
 
 [ENGLISH README](README.md)
+
 <!-- TEMPLATE (ZH) END: LANGUAGE NAVIGATION -->
 
 ## 核心架构
@@ -30,6 +32,7 @@
 `vue3kratos` 连接 Go 后端与 Vue 3 前端，生成 TypeScript 客户端。
 
 ### 开发工具链
+
 ```
 +-------------+    +----------+    +---------------+    +--------------+    +---------------+
 | .proto 文件 | -> | protoc   | -> | gRPC TS 客户端| -> | vue3kratos   | -> | HTTP TS 客户端|
@@ -39,16 +42,16 @@
 
 ## 🌟 核心特性
 
-*   **自动代码生成**: 从 proto 文件生成简洁的 TypeScript 客户端
-*   **告别手写**: 忘掉手动编写 API 客户端代码
-*   **一键转换**: 单条命令将 gRPC 客户端转换成 HTTP 客户端
-*   **Web 兼容**: 直接在 Web 中使用，无需 gRPC 问题
-*   **完整类型安全**: 端到端的类型检查从后端到前端
-*   **IDE 智能提示**: 丰富的开发体验，智能代码补全
-*   **Makefile 集成**: 简单集成到现有构建流程
-*   **CI/CD 管线**: 平滑的工作流自动化支持
-*   **Axios HTTP 客户端**: 现代化的 HTTP 客户端实现
-*   **原生函数体验**: 像调用原生函数一样调用 API
+- **自动代码生成**: 从 proto 文件生成简洁的 TypeScript 客户端
+- **告别手写**: 忘掉手动编写 API 客户端代码
+- **一键转换**: 单条命令将 gRPC 客户端转换成 HTTP 客户端
+- **Web 兼容**: 直接在 Web 中使用，无需 gRPC 问题
+- **完整类型安全**: 端到端的类型检查从后端到前端
+- **IDE 智能提示**: 丰富的开发体验，智能代码补全
+- **Makefile 集成**: 简单集成到现有构建流程
+- **CI/CD 管线**: 平滑的工作流自动化支持
+- **Axios HTTP 客户端**: 现代化的 HTTP 客户端实现
+- **原生函数体验**: 像调用原生函数一样调用 API
 
 ## 关联项目
 
@@ -102,6 +105,9 @@ web_api_grpc_ts:
 	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
 	protoc \
 	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
+	--ts_opt=ts_nocheck \
+	--ts_opt=eslint_disable \
+	--ts_opt=long_type_string \
 	--ts_out=./bin/web_api_grpc_ts.out \
 	--proto_path=./api \
 	--proto_path=./third_party \
@@ -110,10 +116,21 @@ web_api_grpc_ts:
 	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
 	protoc \
 	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
+	--ts_opt=ts_nocheck \
+	--ts_opt=eslint_disable \
+	--ts_opt=long_type_string \
 	--ts_out=./bin/web_api_grpc_ts.out \
 	--proto_path=./third_party \
 	$(THIRD_PARTY_GOOGLE_API_PROTO_FILES)
 ```
+
+**`--ts_opt` 各项配置说明：**
+
+| 选项               | 作用                                                                                    |
+| ------------------ | --------------------------------------------------------------------------------------- |
+| `ts_nocheck`       | 在生成文件顶部添加 `// @ts-nocheck`，跳过 TypeScript 类型检查（自动生成的代码无需检查） |
+| `eslint_disable`   | 在生成文件顶部添加 `/* eslint-disable */`，防止 ESLint 对自动生成的代码报错             |
+| `long_type_string` | int64/uint64 字段使用 `string` 代替 `bigint`，避免部分环境下 `bigint` 兼容问题          |
 
 Makefile 中还需添加：
 
@@ -143,29 +160,29 @@ npm install @yylego/grpc-to-http
 
 ```typescript
 // 来自 kratos-vue3-demos 演示代码
-import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
+import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { RpcpingClient } from "./rpc/rpcping/rpcping.client";
 import { StringValue } from "./rpc/google/protobuf/wrappers";
 
 // 创建传输实例
 const demoTransport = new GrpcWebFetchTransport({
-    baseUrl: "http://127.0.0.1:28000",
-    meta: {
-        Authorization: 'TOKEN-888',
-    },
+  baseUrl: "http://127.0.0.1:28000",
+  meta: {
+    Authorization: "TOKEN-888",
+  },
 });
 
 const rpcpingClient = new RpcpingClient(demoTransport);
 
 // API 调用示例
 async function demoPing() {
-    const request = StringValue.create({
-        value: "Hello from Vue3 Kratos!"
-    });
+  const request = StringValue.create({
+    value: "Hello from Vue3 Kratos!",
+  });
 
-    const response = await rpcpingClient.ping(request, {});
-    console.log('Ping 成功:', response.data.value);
-    return response.data.value;
+  const response = await rpcpingClient.ping(request, {});
+  console.log("Ping 成功:", response.data.value);
+  return response.data.value;
 }
 ```
 
@@ -178,10 +195,12 @@ async function demoPing() {
 **[kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos)** - 完整的演示项目，包含后端和前端集成
 
 演示项目的 Makefile 展示了完整流程：
+
 - [demo1kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo1kratos/Makefile)
 - [demo2kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo2kratos/Makefile)
 
 在仓库的 [`examples`](internal/examples) 中还包含这些示例：
+
 - [`example1`](internal/examples/example1) - 服务示例
 - [`example2`](internal/examples/example2) - 服务示例
 
@@ -191,19 +210,19 @@ async function demoPing() {
 
 ## ✅ 特性概览
 
-* 将 Kratos proto 文件生成成类型安全的 TypeScript gRPC 客户端
-* 支持自动转换成 HTTP 请求形式（Axios 封装）
-* 支持类型提示与自动补全，前端集成体验优秀
-* 可集成至 Makefile 和 CI/CD 中
-* Web 兼容的 HTTP 客户端，支持直接前端调用
+- 将 Kratos proto 文件生成成类型安全的 TypeScript gRPC 客户端
+- 支持自动转换成 HTTP 请求形式（Axios 封装）
+- 支持类型提示与自动补全，前端集成体验优秀
+- 可集成至 Makefile 和 CI/CD 中
+- Web 兼容的 HTTP 客户端，支持直接前端调用
 
 ---
 
 ## 💡 适合人群
 
-* 使用 Kratos 作为后端的开发者
-* 想通过 Vue 3 编写前端，调用后端服务
-* 希望实现"完整类型安全"客户端和后端集成的开发者
+- 使用 Kratos 作为后端的开发者
+- 想通过 Vue 3 编写前端，调用后端服务
+- 希望实现"完整类型安全"客户端和后端集成的开发者
 
 ---
 

@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/yylego/kratos-vue3/vue3kratos"
 	"github.com/stretchr/testify/require"
 	"github.com/yylego/done"
+	"github.com/yylego/kratos-vue3/vue3kratos"
 	"github.com/yylego/must"
 	"github.com/yylego/runpath"
 )

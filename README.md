@@ -20,9 +20,11 @@
 ---
 
 <!-- TEMPLATE (EN) BEGIN: LANGUAGE NAVIGATION -->
+
 ## CHINESE README
 
 [中文说明](README.zh.md)
+
 <!-- TEMPLATE (EN) END: LANGUAGE NAVIGATION -->
 
 ## Core Architecture
@@ -30,6 +32,7 @@
 `vue3kratos` bridges Go backends and Vue 3 frontends with TypeScript client.
 
 ### Development Toolchain
+
 ```
 +-------------+    +----------+    +---------------+    +--------------+    +---------------+
 | .proto files| -> | protoc   | -> | gRPC TS Client| -> | vue3kratos   | -> | HTTP TS Client|
@@ -39,16 +42,16 @@
 
 ## 🌟 Highlights
 
-*   **Auto Code Generation**: Generate clean TypeScript clients from proto files
-*   **No Handwriting**: Forget about handwriting API clients
-*   **Single Command Convert**: Transform gRPC clients to HTTP with one command
-*   **Web Compatible**: Works in web without gRPC issues
-*   **Complete Type-Safe**: End-to-end type checking from backend to frontend
-*   **IDE Autocompletion**: Rich development experience with smart suggestions
-*   **Makefile Integration**: Simple integration into existing build process
-*   **CI/CD Pipeline**: Smooth workflow automation support
-*   **Axios HTTP Clients**: Modern HTTP client implementation
-*   **Native Function Experience**: Invoke APIs just as native functions
+- **Auto Code Generation**: Generate clean TypeScript clients from proto files
+- **No Handwriting**: Forget about handwriting API clients
+- **Single Command Convert**: Transform gRPC clients to HTTP with one command
+- **Web Compatible**: Works in web without gRPC issues
+- **Complete Type-Safe**: End-to-end type checking from backend to frontend
+- **IDE Autocompletion**: Rich development experience with smart suggestions
+- **Makefile Integration**: Simple integration into existing build process
+- **CI/CD Pipeline**: Smooth workflow automation support
+- **Axios HTTP Clients**: Modern HTTP client implementation
+- **Native Function Experience**: Invoke APIs just as native functions
 
 ## Related Projects
 
@@ -102,6 +105,9 @@ web_api_grpc_ts:
 	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
 	protoc \
 	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
+	--ts_opt=ts_nocheck \
+	--ts_opt=eslint_disable \
+	--ts_opt=long_type_string \
 	--ts_out=./bin/web_api_grpc_ts.out \
 	--proto_path=./api \
 	--proto_path=./third_party \
@@ -110,10 +116,21 @@ web_api_grpc_ts:
 	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
 	protoc \
 	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
+	--ts_opt=ts_nocheck \
+	--ts_opt=eslint_disable \
+	--ts_opt=long_type_string \
 	--ts_out=./bin/web_api_grpc_ts.out \
 	--proto_path=./third_party \
 	$(THIRD_PARTY_GOOGLE_API_PROTO_FILES)
 ```
+
+**`--ts_opt` options explained:**
+
+| Option             | Effect                                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `ts_nocheck`       | Adds `// @ts-nocheck` to generated files, suppresses TypeScript type checking on auto-generated code  |
+| `eslint_disable`   | Adds `/* eslint-disable */` to generated files, prevents ESLint from flagging auto-generated code     |
+| `long_type_string` | Uses `string` instead of `bigint` on int64/uint64 fields, avoids `bigint` issues in some environments |
 
 Add this variable to the Makefile:
 
@@ -143,29 +160,29 @@ npm install @yylego/grpc-to-http
 
 ```typescript
 // Demo example from kratos-vue3-demos repo
-import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
+import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { RpcpingClient } from "./rpc/rpcping/rpcping.client";
 import { StringValue } from "./rpc/google/protobuf/wrappers";
 
 // Create transport instance
 const demoTransport = new GrpcWebFetchTransport({
-    baseUrl: "http://127.0.0.1:28000",
-    meta: {
-        Authorization: 'TOKEN-888',
-    },
+  baseUrl: "http://127.0.0.1:28000",
+  meta: {
+    Authorization: "TOKEN-888",
+  },
 });
 
 const rpcpingClient = new RpcpingClient(demoTransport);
 
 // Invoke API example
 async function demoPing() {
-    const request = StringValue.create({
-        value: "Hello from Vue3 Kratos!"
-    });
+  const request = StringValue.create({
+    value: "Hello from Vue3 Kratos!",
+  });
 
-    const response = await rpcpingClient.ping(request, {});
-    console.log('Ping success:', response.data.value);
-    return response.data.value;
+  const response = await rpcpingClient.ping(request, {});
+  console.log("Ping success:", response.data.value);
+  return response.data.value;
 }
 ```
 
@@ -178,10 +195,12 @@ See the complete working examples in the separate repo:
 **[kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos)** - Complete demo projects with backend and frontend integration
 
 The Makefiles in the demo projects show the complete flow:
+
 - [demo1kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo1kratos/Makefile)
 - [demo2kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo2kratos/Makefile)
 
 The [`examples`](internal/examples) DIR contains these examples:
+
 - [`example1`](internal/examples/example1) - Service demo
 - [`example2`](internal/examples/example2) - Service demo
 
@@ -191,19 +210,19 @@ These examples show proto-based test data generation.
 
 ## ✅ Feature Overview
 
-* Generate type-safe TypeScript gRPC clients from Kratos proto files
-* Support automatic conversion to HTTP requests (Axios-based)
-* Complete type-safe with IDE autocomplete and checking
-* Simple integration into Makefiles and CI/CD pipelines
-* Web-compatible HTTP clients with direct frontend use
+- Generate type-safe TypeScript gRPC clients from Kratos proto files
+- Support automatic conversion to HTTP requests (Axios-based)
+- Complete type-safe with IDE autocomplete and checking
+- Simple integration into Makefiles and CI/CD pipelines
+- Web-compatible HTTP clients with direct frontend use
 
 ---
 
 ## 💡 Who Should Use This
 
-* Developers using Kratos as the backend
-* Frontend developers using Vue 3 to invoke backend services
-* Developers who want complete type-safe client-backend integration
+- Developers using Kratos as the backend
+- Frontend developers using Vue 3 to invoke backend services
+- Developers who want complete type-safe client-backend integration
 
 ---
 

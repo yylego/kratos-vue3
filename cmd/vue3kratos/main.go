@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/yylego/kratos-vue3/vue3kratos"
 	"github.com/spf13/cobra"
 	"github.com/yylego/done"
+	"github.com/yylego/kratos-vue3/vue3kratos"
 	"github.com/yylego/osexistpath/osmustexist"
 	"github.com/yylego/zaplog"
 	"go.uber.org/zap"

@@ -16,6 +16,9 @@ generate:
 	NODE_OPTIONS="--no-webstorage" \
 	protoc \
 		--plugin=protoc-gen-ts=$$(which protoc-gen-ts) \
+		--ts_opt=ts_nocheck \
+		--ts_opt=eslint_disable \
+		--ts_opt=long_type_string \
 		--ts_out=$(OUTPUT_DIR) \
 		--proto_path=./api \
 		--proto_path=../../proto3ps \
