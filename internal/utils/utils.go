@@ -45,10 +45,7 @@ func CopyFiles(sourceRoot string, targetRoot string) {
 		muststrings.HasPrefix(srcPath, sourceRoot)
 
 		relPath := must.V1(filepath.Rel(sourceRoot, srcPath))
-		absPath := filepath.Join(sourceRoot, relPath)
-		must.Same(absPath, srcPath)
-
-		content := rese.V1(os.ReadFile(osmustexist.FILE(absPath)))
+		content := rese.V1(os.ReadFile(osmustexist.FILE(srcPath)))
 		dstPath := filepath.Join(targetRoot, relPath)
 		zaplog.SUG.Debugln(dstPath)
 

@@ -46,7 +46,7 @@
 - **No Handwriting**: Forget about handwriting API clients
 - **Single Command Convert**: Transform gRPC clients to HTTP with one command
 - **Web Compatible**: Works in web without gRPC issues
-- **Complete Type-Safe**: End-to-end type checking from backend to frontend
+- **Complete Type-Safe**: Type checking all the way from backend to frontend
 - **IDE Autocompletion**: Rich development experience with smart suggestions
 - **Makefile Integration**: Simple integration into existing build process
 - **CI/CD Pipeline**: Smooth workflow automation support
@@ -90,41 +90,37 @@ go install github.com/yylego/kratos-vue3/cmd/vue3kratos@latest
 ```bash
 # Example dependencies in system-wide
 npm list -g --depth=0
-├── @protobuf-ts/plugin@2.9.4
+├── @protobuf-ts/plugin@2.11.1
 ├── typescript@5.4.5
 ├── vite@5.4.8
 ```
 
 ### Step 2: Generate the gRPC Client
 
-In the Kratos project, use `protoc` and `protoc-gen-ts` to generate the TypeScript client from the `.proto` files. Recommended to manage this in a `Makefile`.
+A Kratos v3 project ships the `buf` toolchain, so generate the TypeScript client with `buf` plus `protoc-gen-ts`. Add a `buf.gen.ts.yaml` template next to the project's `buf.yaml`:
+
+```yaml
+version: v2
+inputs:
+  - directory: api
+plugins:
+  - local: protoc-gen-ts
+    out: bin/web_api_grpc_ts.out
+    opt:
+      - ts_nocheck
+      - eslint_disable
+      - long_type_string
+```
+
+Then drive it from a `Makefile` target:
 
 ```makefile
 web_api_grpc_ts:
 	mkdir -p ./bin/web_api_grpc_ts.out
-	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
-	protoc \
-	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
-	--ts_opt=ts_nocheck \
-	--ts_opt=eslint_disable \
-	--ts_opt=long_type_string \
-	--ts_out=./bin/web_api_grpc_ts.out \
-	--proto_path=./api \
-	--proto_path=./third_party \
-	$(API_PROTO_FILES)
-
-	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
-	protoc \
-	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
-	--ts_opt=ts_nocheck \
-	--ts_opt=eslint_disable \
-	--ts_opt=long_type_string \
-	--ts_out=./bin/web_api_grpc_ts.out \
-	--proto_path=./third_party \
-	$(THIRD_PARTY_GOOGLE_API_PROTO_FILES)
+	buf generate --template buf.gen.ts.yaml --include-imports
 ```
 
-**`--ts_opt` options explained:**
+**`opt` options explained:**
 
 | Option             | Effect                                                                                                |
 | ------------------ | ----------------------------------------------------------------------------------------------------- |
@@ -132,11 +128,7 @@ web_api_grpc_ts:
 | `eslint_disable`   | Adds `/* eslint-disable */` to generated files, prevents ESLint from flagging auto-generated code     |
 | `long_type_string` | Uses `string` instead of `bigint` on int64/uint64 fields, avoids `bigint` issues in some environments |
 
-Add this variable to the Makefile:
-
-```makefile
-THIRD_PARTY_GOOGLE_API_PROTO_FILES=$(shell find third_party/google/api -name *.proto)
-```
+`--include-imports` makes `buf` emit the imported google well-known types too, so the generated client's imports resolve. `buf` pulls the google protos from its registry (declare `buf.build/googleapis/googleapis` under `deps` in `buf.yaml`), so no local `third_party` proto tree is needed.
 
 ### Step 3: Convert to HTTP Client
 

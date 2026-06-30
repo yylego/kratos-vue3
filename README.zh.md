@@ -46,7 +46,7 @@
 - **告别手写**: 忘掉手动编写 API 客户端代码
 - **一键转换**: 单条命令将 gRPC 客户端转换成 HTTP 客户端
 - **Web 兼容**: 直接在 Web 中使用，无需 gRPC 问题
-- **完整类型安全**: 端到端的类型检查从后端到前端
+- **完整类型安全**: 从后端到前端全程类型检查
 - **IDE 智能提示**: 丰富的开发体验，智能代码补全
 - **Makefile 集成**: 简单集成到现有构建流程
 - **CI/CD 管线**: 平滑的工作流自动化支持
@@ -90,41 +90,37 @@ go install github.com/yylego/kratos-vue3/cmd/vue3kratos@latest
 ```bash
 # 示例系统范围依赖
 npm list -g --depth=0
-├── @protobuf-ts/plugin@2.9.4
+├── @protobuf-ts/plugin@2.11.1
 ├── typescript@5.4.5
 ├── vite@5.4.8
 ```
 
 ### 第2步: 生成 gRPC 客户端
 
-在 Kratos 项目中，使用 `protoc` 和 `protoc-gen-ts` 从 `.proto` 文件生成 TypeScript 客户端。推荐在 `Makefile` 中管理。
+Kratos v3 项目自带 `buf` 工具链，所以用 `buf` 配合 `protoc-gen-ts` 生成 TypeScript 客户端。在项目 `buf.yaml` 旁边加一个 `buf.gen.ts.yaml` 模板：
+
+```yaml
+version: v2
+inputs:
+  - directory: api
+plugins:
+  - local: protoc-gen-ts
+    out: bin/web_api_grpc_ts.out
+    opt:
+      - ts_nocheck
+      - eslint_disable
+      - long_type_string
+```
+
+再用 `Makefile` target 驱动它：
 
 ```makefile
 web_api_grpc_ts:
 	mkdir -p ./bin/web_api_grpc_ts.out
-	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
-	protoc \
-	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
-	--ts_opt=ts_nocheck \
-	--ts_opt=eslint_disable \
-	--ts_opt=long_type_string \
-	--ts_out=./bin/web_api_grpc_ts.out \
-	--proto_path=./api \
-	--proto_path=./third_party \
-	$(API_PROTO_FILES)
-
-	PROTOC_GEN_TS=$$(which protoc-gen-ts) && \
-	protoc \
-	--plugin=protoc-gen-ts=$$PROTOC_GEN_TS \
-	--ts_opt=ts_nocheck \
-	--ts_opt=eslint_disable \
-	--ts_opt=long_type_string \
-	--ts_out=./bin/web_api_grpc_ts.out \
-	--proto_path=./third_party \
-	$(THIRD_PARTY_GOOGLE_API_PROTO_FILES)
+	buf generate --template buf.gen.ts.yaml --include-imports
 ```
 
-**`--ts_opt` 各项配置说明：**
+**`opt` 各项配置说明：**
 
 | 选项               | 作用                                                                                    |
 | ------------------ | --------------------------------------------------------------------------------------- |
@@ -132,11 +128,7 @@ web_api_grpc_ts:
 | `eslint_disable`   | 在生成文件顶部添加 `/* eslint-disable */`，防止 ESLint 对自动生成的代码报错             |
 | `long_type_string` | int64/uint64 字段使用 `string` 代替 `bigint`，避免部分环境下 `bigint` 兼容问题          |
 
-Makefile 中还需添加：
-
-```makefile
-THIRD_PARTY_GOOGLE_API_PROTO_FILES=$(shell find third_party/google/api -name *.proto)
-```
+`--include-imports` 让 `buf` 把 import 进来的 google 标准类型也一并生成，这样生成的客户端 import 才能解析。google protos 由 `buf` 从它的 registry 拉取（在 `buf.yaml` 的 `deps` 里声明 `buf.build/googleapis/googleapis`），所以**不再需要本地的 `third_party` proto 目录**。
 
 ### 第3步: 转换为 HTTP 客户端
 

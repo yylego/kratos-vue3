@@ -1,6 +1,5 @@
-# Generate TypeScript gRPC client from proto files
+# Generate TypeScript gRPC client from proto files (buf toolchain)
 
-API_PROTO_FILES = $(shell find ./api -name "*.proto")
 OUTPUT_DIR = ./gen/ts
 
 .PHONY: install
@@ -13,16 +12,7 @@ install:
 generate:
 	@echo "Generating TypeScript gRPC client code..."
 	@mkdir -p $(OUTPUT_DIR)
-	NODE_OPTIONS="--no-webstorage" \
-	protoc \
-		--plugin=protoc-gen-ts=$$(which protoc-gen-ts) \
-		--ts_opt=ts_nocheck \
-		--ts_opt=eslint_disable \
-		--ts_opt=long_type_string \
-		--ts_out=$(OUTPUT_DIR) \
-		--proto_path=./api \
-		--proto_path=../../proto3ps \
-		$(API_PROTO_FILES)
+	buf generate --template buf.gen.ts.yaml --include-imports
 	@echo "Generation complete! Output: $(OUTPUT_DIR)"
 
 .PHONY: refresh
