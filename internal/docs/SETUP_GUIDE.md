@@ -156,8 +156,8 @@ vue3kratos gen-grpc-via-http-in-path --grpc-ts-path=/path/to/generated.client.ts
 
 Run the conversion in the frontend project. See the demo Makefiles:
 
-- [demo1 Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo1kratos/Makefile)
-- [demo2 Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo2kratos/Makefile)
+- [demo1 Makefile](https://github.com/kratos-examples/vue3/blob/main/demo1kratos/Makefile)
+- [demo2 Makefile](https://github.com/kratos-examples/vue3/blob/main/demo2kratos/Makefile)
 
 ---
 

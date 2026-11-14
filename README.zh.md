@@ -1,9 +1,13 @@
+<!-- TEMPLATE (ZH) BEGIN: BADGES -->
+
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/yylego/kratos-vue3/release.yml?branch=main&label=BUILD)](https://github.com/yylego/kratos-vue3/actions/workflows/release.yml?query=branch%3Amain)
 [![GoDoc](https://pkg.go.dev/badge/github.com/yylego/kratos-vue3)](https://pkg.go.dev/github.com/yylego/kratos-vue3)
 [![Coverage Status](https://img.shields.io/coveralls/github/yylego/kratos-vue3/main.svg)](https://coveralls.io/github/yylego/kratos-vue3?branch=main)
-[![Supported Go Versions](https://img.shields.io/badge/Go-1.24--1.25-lightgrey.svg)](https://github.com/yylego/kratos-vue3)
+[![Supported Go Versions](https://img.shields.io/badge/Go-1.24%2B-lightgrey.svg)](https://go.dev/)
 [![GitHub Release](https://img.shields.io/github/release/yylego/kratos-vue3.svg)](https://github.com/yylego/kratos-vue3/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yylego/kratos-vue3)](https://goreportcard.com/report/github.com/yylego/kratos-vue3)
+
+<!-- TEMPLATE (ZH) CLOSE: BADGES -->
 
 # kratos-vue3
 
@@ -12,6 +16,8 @@
 > 无缝的 TypeScript + Go RPC 集成，使用 `@protobuf-ts/plugin`
 > 从后端到前端的完整类型安全代码
 > 像调用原生函数一样调用后端 API
+
+⚠️ **已被 [kratos-ts-http](https://github.com/yylego/kratos-ts-http) 取代。** 本包要分两步改写客户端，已不再更新，也不支持流式方法。新老项目都请换用 kratos-ts-http，它把改写直接做进了生成插件。这里的代码照原样保留。
 
 ---
 
@@ -25,7 +31,7 @@
 
 [ENGLISH README](README.md)
 
-<!-- TEMPLATE (ZH) END: LANGUAGE NAVIGATION -->
+<!-- TEMPLATE (ZH) CLOSE: LANGUAGE NAVIGATION -->
 
 ## 核心架构
 
@@ -56,13 +62,13 @@
 ## 关联项目
 
 - [grpc-to-http](https://github.com/yylego/grpc-to-http) — npm 包 [`@yylego/grpc-to-http`](https://www.npmjs.com/package/@yylego/grpc-to-http)，将 protobuf-ts gRPC 调用转换为基于 Axios 的 HTTP/REST 请求
-- [kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos) — 完整的演示项目，包含后端和前端集成
+- [kratos-examples/vue3](https://github.com/kratos-examples/vue3) — 完整的演示项目，包含后端和前端集成
 
 ## 🚀 快速上手
 
 在几分钟内，通过演示项目亲身体验 `vue3kratos` 的强大之处。
 
-访问独立的演示代码：**[kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos)**
+访问独立的演示代码：**[kratos-examples/vue3](https://github.com/kratos-examples/vue3)**
 
 按照演示代码中的说明运行完整示例。
 
@@ -151,7 +157,7 @@ npm install @yylego/grpc-to-http
 > npm 模块地址：[@yylego/grpc-to-http](https://www.npmjs.com/package/@yylego/grpc-to-http)
 
 ```typescript
-// 来自 kratos-vue3-demos 演示代码
+// 来自 kratos-examples/vue3 演示代码
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { RpcpingClient } from "./rpc/rpcping/rpcping.client";
 import { StringValue } from "./rpc/google/protobuf/wrappers";
@@ -184,12 +190,12 @@ async function demoPing() {
 
 在独立代码中查看完整的工作示例：
 
-**[kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos)** - 完整的演示项目，包含后端和前端集成
+**[kratos-examples/vue3](https://github.com/kratos-examples/vue3)** - 完整的演示项目，包含后端和前端集成
 
 演示项目的 Makefile 展示了完整流程：
 
-- [demo1kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo1kratos/Makefile)
-- [demo2kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo2kratos/Makefile)
+- [demo1kratos Makefile](https://github.com/kratos-examples/vue3/blob/main/demo1kratos/Makefile)
+- [demo2kratos Makefile](https://github.com/kratos-examples/vue3/blob/main/demo2kratos/Makefile)
 
 在仓库的 [`examples`](internal/examples) 中还包含这些示例：
 
@@ -225,23 +231,23 @@ async function demoPing() {
 ---
 
 <!-- TEMPLATE (ZH) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-09-26 07:39:27.188023 +0000 UTC -->
+<!-- VERSION 2025-11-25 03:52:28.131064 +0000 UTC -->
 
 ## 📄 许可证类型
 
-MIT 许可证。详见 [LICENSE](LICENSE)。
+MIT 许可证 - 详见 [LICENSE](LICENSE)。
 
 ---
 
-## 🤝 项目贡献
+## 💬 联系与反馈
 
 非常欢迎贡献代码！报告 BUG、建议功能、贡献代码：
 
-- 🐛 **发现问题？** 在 GitHub 上提交问题并附上重现步骤
-- 💡 **功能建议？** 创建 issue 讨论您的想法
-- 📖 **文档疑惑？** 报告问题，帮助我们改进文档
+- 🐛 **问题报告？** 在 GitHub 上提交问题并附上重现步骤
+- 💡 **新颖思路？** 创建 issue 讨论
+- 📖 **文档疑惑？** 报告问题，帮助我们完善文档
 - 🚀 **需要功能？** 分享使用场景，帮助理解需求
-- ⚡ **性能瓶颈？** 报告慢操作，帮助我们优化性能
+- ⚡ **性能瓶颈？** 报告慢操作，协助解决性能问题
 - 🔧 **配置困扰？** 询问复杂设置的相关问题
 - 📢 **关注进展？** 关注仓库以获取新版本和功能
 - 🌟 **成功案例？** 分享这个包如何改善工作流程
@@ -259,7 +265,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 4. **分支**：创建功能分支（`git checkout -b feature/xxx`）
 5. **编码**：实现您的更改并编写全面的测试
 6. **测试**：（Golang 项目）确保测试通过（`go test ./...`）并遵循 Go 代码风格约定
-7. **文档**：为面向用户的更改更新文档，并使用有意义的提交消息
+7. **文档**：面向用户的更改需要更新文档
 8. **暂存**：暂存更改（`git add .`）
 9. **提交**：提交更改（`git commit -m "Add feature xxx"`）确保向后兼容的代码
 10. **推送**：推送到分支（`git push origin feature/xxx`）
@@ -271,7 +277,7 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 
 ## 🌟 项目支持
 
-非常欢迎通过提交 Merge Request 和报告问题来为此项目做出贡献。
+非常欢迎通过提交 Merge Request 和报告问题来贡献此项目。
 
 **项目支持：**
 
@@ -282,10 +288,4 @@ MIT 许可证。详见 [LICENSE](LICENSE)。
 
 **祝你用这个包编程愉快！** 🎉🎉🎉
 
-<!-- TEMPLATE (ZH) END: STANDARD PROJECT FOOTER -->
-
----
-
-## GitHub 标星点赞
-
-[![标星点赞](https://starchart.cc/yylego/kratos-vue3.svg?variant=adaptive)](https://starchart.cc/yylego/kratos-vue3)
+<!-- TEMPLATE (ZH) CLOSE: STANDARD PROJECT FOOTER -->

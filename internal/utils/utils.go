@@ -5,11 +5,6 @@ import (
 	"path/filepath"
 
 	"github.com/yylego/erero"
-	"github.com/yylego/must"
-	"github.com/yylego/must/muststrings"
-	"github.com/yylego/osexistpath/osmustexist"
-	"github.com/yylego/rese"
-	"github.com/yylego/zaplog"
 )
 
 // WalkFiles walks through files in the DIR and runs the function on each file
@@ -32,25 +27,4 @@ func WalkFiles(root string, run func(path string, info os.FileInfo) error) error
 		return erero.Wro(err)
 	}
 	return nil
-}
-
-// CopyFiles copies files from source DIR to target DIR
-// Preserves the same relative paths and file permissions
-//
-// CopyFiles 将文件从源 DIR 复制到目标 DIR
-// 保持相同的相对路径和文件权限
-func CopyFiles(sourceRoot string, targetRoot string) {
-	must.Done(WalkFiles(sourceRoot, func(srcPath string, info os.FileInfo) error {
-		zaplog.SUG.Debugln(srcPath)
-		muststrings.HasPrefix(srcPath, sourceRoot)
-
-		relPath := must.V1(filepath.Rel(sourceRoot, srcPath))
-		content := rese.V1(os.ReadFile(osmustexist.FILE(srcPath)))
-		dstPath := filepath.Join(targetRoot, relPath)
-		zaplog.SUG.Debugln(dstPath)
-
-		must.Done(os.MkdirAll(filepath.Dir(dstPath), 0755))
-		must.Done(os.WriteFile(dstPath, content, 0644))
-		return nil
-	}))
 }

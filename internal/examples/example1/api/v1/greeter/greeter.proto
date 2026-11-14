@@ -9,7 +9,7 @@ option go_package = "github.com/yylego/vue3kratos/internal/api/v1/greeter;greete
 service Greeter {
   // Sends a greeting
   // 发送问候
-  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc SayHello(HelloRequest) returns (HelloReply);
 }
 
 // The request message containing the user's name

@@ -87,9 +87,3 @@ func GenGrpcViaHttpInCode(srcContent string) string {
 	}
 	return newContent
 }
-
-// CloneFilesToDestRoot copies files from source DIR to target DIR
-// 把源 DIR 的文件克隆到目标 DIR 中
-func CloneFilesToDestRoot(sourceRoot string, targetRoot string) {
-	utils.CopyFiles(sourceRoot, targetRoot)
-}

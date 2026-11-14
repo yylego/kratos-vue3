@@ -1,9 +1,13 @@
+<!-- TEMPLATE (EN) BEGIN: BADGES -->
+
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/yylego/kratos-vue3/release.yml?branch=main&label=BUILD)](https://github.com/yylego/kratos-vue3/actions/workflows/release.yml?query=branch%3Amain)
 [![GoDoc](https://pkg.go.dev/badge/github.com/yylego/kratos-vue3)](https://pkg.go.dev/github.com/yylego/kratos-vue3)
 [![Coverage Status](https://img.shields.io/coveralls/github/yylego/kratos-vue3/main.svg)](https://coveralls.io/github/yylego/kratos-vue3?branch=main)
-[![Supported Go Versions](https://img.shields.io/badge/Go-1.24--1.25-lightgrey.svg)](https://github.com/yylego/kratos-vue3)
+[![Supported Go Versions](https://img.shields.io/badge/Go-1.24%2B-lightgrey.svg)](https://go.dev/)
 [![GitHub Release](https://img.shields.io/github/release/yylego/kratos-vue3.svg)](https://github.com/yylego/kratos-vue3/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yylego/kratos-vue3)](https://goreportcard.com/report/github.com/yylego/kratos-vue3)
+
+<!-- TEMPLATE (EN) CLOSE: BADGES -->
 
 # kratos-vue3
 
@@ -12,6 +16,8 @@
 > Seamless TypeScript + Go RPC integration, use `@protobuf-ts/plugin`
 > Complete type-safe code from backend to frontend
 > Invoke backend APIs just as native functions
+
+⚠️ **Replaced with [kratos-ts-http](https://github.com/yylego/kratos-ts-http).** This package rewrites the clients in a second pass and gets no more updates; it does not handle stream methods. New and existing projects should move to kratos-ts-http, which folds the rewrite into generation. The code here stays as it is.
 
 ---
 
@@ -25,7 +31,7 @@
 
 [中文说明](README.zh.md)
 
-<!-- TEMPLATE (EN) END: LANGUAGE NAVIGATION -->
+<!-- TEMPLATE (EN) CLOSE: LANGUAGE NAVIGATION -->
 
 ## Core Architecture
 
@@ -56,13 +62,13 @@
 ## Related Projects
 
 - [grpc-to-http](https://github.com/yylego/grpc-to-http) — npm package [`@yylego/grpc-to-http`](https://www.npmjs.com/package/@yylego/grpc-to-http), converts protobuf-ts gRPC invocations to HTTP/REST requests via Axios
-- [kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos) — Complete demo projects with backend and frontend integration
+- [kratos-examples/vue3](https://github.com/kratos-examples/vue3) — Complete demo projects with backend and frontend integration
 
 ## 🚀 Quick Start
 
 Experience the magic of `vue3kratos` in minutes with the demo projects.
 
-Visit the separate demo repo: **[kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos)**
+Visit the separate demo repo: **[kratos-examples/vue3](https://github.com/kratos-examples/vue3)**
 
 Follow the instructions in the demo repo to run the complete examples.
 
@@ -151,7 +157,7 @@ npm install @yylego/grpc-to-http
 > npm module URL: [@yylego/grpc-to-http](https://www.npmjs.com/package/@yylego/grpc-to-http)
 
 ```typescript
-// Demo example from kratos-vue3-demos repo
+// Demo example from kratos-examples/vue3 repo
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 import { RpcpingClient } from "./rpc/rpcping/rpcping.client";
 import { StringValue } from "./rpc/google/protobuf/wrappers";
@@ -184,12 +190,12 @@ async function demoPing() {
 
 See the complete working examples in the separate repo:
 
-**[kratos-vue3-demos](https://github.com/yylego/kratos-vue3-demos)** - Complete demo projects with backend and frontend integration
+**[kratos-examples/vue3](https://github.com/kratos-examples/vue3)** - Complete demo projects with backend and frontend integration
 
 The Makefiles in the demo projects show the complete flow:
 
-- [demo1kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo1kratos/Makefile)
-- [demo2kratos Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo2kratos/Makefile)
+- [demo1kratos Makefile](https://github.com/kratos-examples/vue3/blob/main/demo1kratos/Makefile)
+- [demo2kratos Makefile](https://github.com/kratos-examples/vue3/blob/main/demo2kratos/Makefile)
 
 The [`examples`](internal/examples) DIR contains these examples:
 
@@ -210,7 +216,7 @@ These examples show proto-based test data generation.
 
 ---
 
-## 💡 Who Should Use This
+## 💡 Target Audience
 
 - Developers using Kratos as the backend
 - Frontend developers using Vue 3 to invoke backend services
@@ -220,25 +226,25 @@ These examples show proto-based test data generation.
 
 ## Setup Guide
 
-[SETUP GUIDE](internal/docs/SETUP_GUIDE.en.md)
+[SETUP GUIDE](internal/docs/SETUP_GUIDE.md)
 
 ---
 
 <!-- TEMPLATE (EN) BEGIN: STANDARD PROJECT FOOTER -->
-<!-- VERSION 2025-09-26 07:39:27.188023 +0000 UTC -->
+<!-- VERSION 2025-11-25 03:52:28.131064 +0000 UTC -->
 
 ## 📄 License
 
-MIT License. See [LICENSE](LICENSE).
+MIT License - see [LICENSE](LICENSE).
 
 ---
 
-## 🤝 Contributing
+## 💬 Contact & Feedback
 
 Contributions are welcome! Report bugs, suggest features, and contribute code:
 
-- 🐛 **Found a mistake?** Open an issue on GitHub with reproduction steps
-- 💡 **Have a feature idea?** Create an issue to discuss the suggestion
+- 🐛 **Mistake reports?** Open an issue on GitHub with reproduction steps
+- 💡 **Fresh ideas?** Create an issue to discuss
 - 📖 **Documentation confusing?** Report it so we can improve
 - 🚀 **Need new features?** Share the use cases to help us understand requirements
 - ⚡ **Performance issue?** Help us optimize through reporting slow operations
@@ -259,7 +265,7 @@ New code contributions, follow this process:
 4. **Branch**: Create a feature branch (`git checkout -b feature/xxx`).
 5. **Code**: Implement the changes with comprehensive tests
 6. **Testing**: (Golang project) Ensure tests pass (`go test ./...`) and follow Go code style conventions
-7. **Documentation**: Update documentation to support client-facing changes and use significant commit messages
+7. **Documentation**: Update documentation to support client-facing changes
 8. **Stage**: Stage changes (`git add .`)
 9. **Commit**: Commit changes (`git commit -m "Add feature xxx"`) ensuring backward compatible code
 10. **Push**: Push to the branch (`git push origin feature/xxx`).
@@ -282,10 +288,4 @@ Welcome to contribute to this project via submitting merge requests and reportin
 
 **Have Fun Coding with this package!** 🎉🎉🎉
 
-<!-- TEMPLATE (EN) END: STANDARD PROJECT FOOTER -->
-
----
-
-## GitHub Stars
-
-[![Stargazers](https://starchart.cc/yylego/kratos-vue3.svg?variant=adaptive)](https://starchart.cc/yylego/kratos-vue3)
+<!-- TEMPLATE (EN) CLOSE: STANDARD PROJECT FOOTER -->

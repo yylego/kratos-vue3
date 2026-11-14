@@ -4,7 +4,7 @@ Vue 3 前端与 Kratos 后端集成工具包。
 
 ---
 
-[ENGLISH README](SETUP_GUIDE.en.md)
+[ENGLISH README](SETUP_GUIDE.md)
 
 ---
 
@@ -98,7 +98,7 @@ plugins:
       - long_type_string
 ```
 
-`buf` 会在 PATH 上找到 `protoc-gen-ts` 插件（来自 `@protobuf-ts/plugin`），所以不用写死绝对路径。
+`buf` 会在 PATH 上找到 `protoc-gen-ts` 插件（来自 `@protobuf-ts/plugin`），所以不用把绝对路径写在配置里。
 
 ### Makefile 配置
 
@@ -156,8 +156,8 @@ vue3kratos gen-grpc-via-http-in-path --grpc-ts-path=/path/to/generated.client.ts
 
 在前端项目中完成转换。参考演示项目的 Makefile：
 
-- [demo1 Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo1kratos/Makefile)
-- [demo2 Makefile](https://github.com/yylego/kratos-vue3-demos/blob/main/demo2kratos/Makefile)
+- [demo1 Makefile](https://github.com/kratos-examples/vue3/blob/main/demo1kratos/Makefile)
+- [demo2 Makefile](https://github.com/kratos-examples/vue3/blob/main/demo2kratos/Makefile)
 
 ---
 
